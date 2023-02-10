@@ -1,28 +1,29 @@
 import React, { useState } from 'react';
-import { Button, Layout, theme } from 'antd';
-import {
-    MenuFoldOutlined,
-    MenuUnfoldOutlined
-} from '@ant-design/icons';
-import Navigation from './Navigation';
+import { Layout, theme } from 'antd';
+import MySider from './Sider';
 import { Outlet } from 'react-router-dom';
+import { useMediaQuery, useTheme } from '@mui/material';
+import MyDrawer from './Drawer';
+import MyHeader from './Header';
 
-const { Header, Content } = Layout;
+const { Content } = Layout;
 
 const MyLayout: React.FC = () => {
-    const [collapsed, setCollapsed] = useState(false);
+    const themeMUI = useTheme();
+    const matches = useMediaQuery(themeMUI.breakpoints.down('md'));
+    const [collapsed, setCollapsed] = useState(matches);
     const {
         token: { colorBgContainer },
     } = theme.useToken();
 
+
     return (
         <div>
             <Layout>
-                <Navigation collapsed={collapsed} />
+                {!matches && <MySider collapsed={collapsed} />}
+                {matches && <MyDrawer open={!collapsed} handleToggle={() => setCollapsed(!collapsed)} />}
                 <Layout>
-                    <Header style={{ padding: 0, background: colorBgContainer }}>
-                        <Button style={{ margin: 10, border: 0 }} icon={ collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />} onClick={() => setCollapsed(!collapsed)} />
-                    </Header>
+                    <MyHeader open={collapsed} handleToggle={() => setCollapsed(!collapsed)} />
                     <Content
                         style={{
                             margin: '24px 16px',

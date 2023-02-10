@@ -9,7 +9,7 @@ export const router = createHashRouter([
         children: [
             {
                 path: 'home',
-                element: <Typography variant="h1">Home</Typography> ,
+                element: <Typography variant="h1">Home</Typography>
             }
         ]
     }
