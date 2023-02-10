@@ -1,26 +1,20 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import MyLayout from './layout';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+import { URL } from 'api/config';
+
+const client = new ApolloClient({
+    uri: URL,
+    cache: new InMemoryCache()
+});
+
+const App: React.FC = () => {
+    return (
+        <ApolloProvider client={client}>
+            <MyLayout />
+        </ApolloProvider>
+    );
+};
 
 export default App;
